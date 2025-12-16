@@ -1,21 +1,17 @@
 #!/bin/sh
-# WARNING: This script is for educational purposes only
-# It intentionally demonstrates bad practices
+set -e
 
-TARGET_DIR=$1
+EXTENSION_ID="vscode-dependencies-autocomplete"
 
-echo "Cleaning up $TARGET_DIR ..."
+echo "Installing VS Code extension: $EXTENSION_ID"
 
-# No input validation
-# No check for empty variables
-# No protection against /
-
-if [ -d $TARGET_DIR ]; then
-    echo "Directory found."
-    echo "Deleting contents (simulated)..."
-    # rm -rf $TARGET_DIR/*
-else
-    echo "Directory does not exist."
+# Check that the `code` CLI exists
+if ! command -v code >/dev/null 2>&1; then
+  echo "Error: VS Code CLI ('code') not found."
+  echo "Open VS Code → Cmd+Shift+P → 'Shell Command: Install code command in PATH'"
+  exit 1
 fi
+
+code --install-extension "$EXTENSION_ID"
 
 echo "Done."
